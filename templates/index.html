@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IP & Domain Scanner</title>
+  <style>
+    body { font-family: Arial; padding: 40px; }
+    input, button, select { padding: 10px; margin: 5px; }
+    .result { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>🔍 IP & Domain Scanner</h2>
+  <form method="POST">
+    <label><input type="radio" name="mode" value="single" checked onchange="toggleMode()"> Scan Single IP/Domain</label>
+    <label><input type="radio" name="mode" value="range" onchange="toggleMode()"> Scan IP Range</label><br><br>
+
+    <div id="single">
+      <input name="single_target" placeholder="Enter domain or IP (e.g., google.com)">
+    </div>
+
+    <div id="range" style="display:none;">
+      <input name="start_ip" placeholder="Start IP (e.g., 192.168.1.1)">
+      <input name="end_ip" placeholder="End IP (e.g., 192.168.1.10)">
+    </div>
+
+    <br><button type="submit">Scan</button>
+  </form>
+
+  {% for r in results %}
+    <div class="result">
+      <p><strong>Input:</strong> {{ r.input }}</p>
+      <p><strong>Resolved IP:</strong> {{ r.ip }}</p>
+      <p><strong>Reverse DNS:</strong> {{ r.reverse }}</p>
+      <p><strong>Open Ports:</strong></p>
+      <ul>
+        {% for port in r.ports %}
+          <li>{{ port }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+
+  <script>
+    function toggleMode() {
+      const mode = document.querySelector('input[name="mode"]:checked').value;
+      document.getElementById('single').style.display = (mode === 'single') ? 'block' : 'none';
+      document.getElementById('range').style.display = (mode === 'range') ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
