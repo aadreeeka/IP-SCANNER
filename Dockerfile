@@ -12,5 +12,5 @@ COPY . /app
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Start with Gunicorn
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:10000"]
+# Command to run the app (Render provides $PORT)
+CMD gunicorn app:app --bind 0.0.0.0:$PORT
