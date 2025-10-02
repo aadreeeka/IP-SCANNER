@@ -3,9 +3,134 @@
 <head>
   <title>IP & Domain Scanner</title>
   <style>
-    body { font-family: Arial; padding: 40px; }
-    input, button, select { padding: 10px; margin: 5px; }
-    .result { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+    /* ---------- General Body ---------- */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #d9e4ff);
+      padding: 40px;
+      transition: background 0.5s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      animation: fadeInDown 1s ease;
+    }
+
+    /* ---------- Form Styling ---------- */
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    form:hover {
+      transform: translateY(-5px);
+    }
+
+    input[type="text"], input[name^="single"], input[name^="start_ip"], input[name^="end_ip"], select {
+      width: calc(100% - 22px);
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+      outline: none;
+    }
+
+    label {
+      display: inline-block;
+      margin-right: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    label:hover {
+      color: #4a90e2;
+    }
+
+    button {
+      padding: 12px 25px;
+      background: linear-gradient(90deg, #4a90e2, #357ab8);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(74,144,226,0.3);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(74,144,226,0.5);
+      background: linear-gradient(90deg, #357ab8, #4a90e2);
+    }
+
+    /* ---------- Result Styling ---------- */
+    .result {
+      background: #fff;
+      border-left: 6px solid #4a90e2;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s forwards;
+      transition: all 0.3s ease;
+    }
+
+    .result p strong {
+      color: #4a90e2;
+    }
+
+    .result ul li {
+      list-style: circle;
+      margin-left: 20px;
+      color: #333;
+    }
+
+    /* ---------- Animations ---------- */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ---------- Responsive ---------- */
+    @media screen and (max-width: 640px) {
+      body {
+        padding: 20px;
+      }
+      form, .result {
+        width: 95%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -27,7 +152,7 @@
   </form>
 
   {% for r in results %}
-    <div class="result">
+    <div class="result" style="animation-delay: {{ loop.index0 * 0.2 }}s;">
       <p><strong>Input:</strong> {{ r.input }}</p>
       <p><strong>Resolved IP:</strong> {{ r.ip }}</p>
       <p><strong>Reverse DNS:</strong> {{ r.reverse }}</p>
@@ -49,3 +174,4 @@
   </script>
 </body>
 </html>
+
